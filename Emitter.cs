@@ -9,22 +9,31 @@ public class NewBehaviourScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0; i < 10; i ++)
-        {
-            GameObject s = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            Particle p = s.AddComponent<Particle>();
-            p.Create(new Vector3(Random.Range(0, 5), Random.Range(0, 5), Random.Range(0, 5)), s);
-            particles.Add(p);
-        }
+        //GameObject s = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        //Particle p = s.AddComponent<Particle>();
+        //p.Create(new Vector3(Random.Range(0, 5), Random.Range(0, 5), Random.Range(0, 5)), s);
+        //particles.Add(p);
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        foreach (Particle p in particles)
+        if (particles.Count < 60)
         {
-            p.Update();
+            GameObject s = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            Particle p = s.AddComponent<Particle>();
+            p.Create(new Vector3(Random.Range(-5, 5), 8, Random.Range(0, 5)), s);
+            particles.Add(p);
+        }
+        foreach (Particle part in particles)
+        {
+            part.ApplyForce(new Vector3(0, -1.0f, 0));
+            part.Update();
+            if(part.position.y <= -3)
+            {
+                part.velocity *= -1;
+            }
         }
     }
 }

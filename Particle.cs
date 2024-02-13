@@ -5,7 +5,7 @@ using UnityEngine;
 public class Particle : MonoBehaviour
 {
     public Vector3 position;
-    Vector3 velocity;
+    public Vector3 velocity;
     Vector3 force;
     Vector3 accel;
     GameObject particle;
@@ -17,14 +17,15 @@ public class Particle : MonoBehaviour
     public void Create(Vector3 pos, GameObject g)
     {
         position = pos;
-        velocity = new Vector3(0, -1, 0);
+        velocity = new Vector3(0, 0, 0);
         accel = new Vector3(0, 0, 0);
+        force = new Vector3(0, 0, 0);
         particle = g;
         particle.transform.parent = transform;
+        particle.transform.localScale = new Vector3(.5f, .5f, .5f);
         currentLife = 1;
-        maxLife = 100;
+        maxLife = 150;
         mass = 1;
-        force = new Vector3(0, 0, 0);
     }
 
     // Start is called before the first frame update
@@ -38,7 +39,12 @@ public class Particle : MonoBehaviour
     {
         if(currentLife >= maxLife)
         {
-            //Reset particle with random startingPos
+            ResetForce();
+            accel = new Vector3(0, 0, 0);
+            velocity = new Vector3(0, 0, 0);
+            position = new Vector3(Random.Range(-5, 5), 8, Random.Range(0, 5));
+            currentLife = 0;
+
         }
         else
         {
@@ -46,8 +52,17 @@ public class Particle : MonoBehaviour
             Vector3 endVel = velocity + accel * Time.deltaTime;
             position = position + (endVel + velocity) / 2f * Time.deltaTime;
             velocity = endVel;
+            // Calculate the progress of color change (0 to 1)
+            float progress = Mathf.Clamp01((float)currentLife / (float)maxLife);
+
+            // Interpolate between startColor and endColor based on progress
+            Color newColor = Color.Lerp(Color.white, Color.blue, progress);
+
+            // Apply the new color to the object's material
+            GetComponent<Renderer>().material.color = newColor;
         }
         particle.transform.position = position;
+        currentLife++;
     }
 
     public void ApplyForce(Vector3 f)
