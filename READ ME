@@ -1,0 +1,13 @@
+This lab was made by Nathan Spencer and Izzy Furl.
+
+Completed Parts of the lab:
+Physically based object movement - 2 points possible
+  -Objects update their position and velocity using acceleration - 2/2 points
+
+Object management - 2 points possible ; split between two categories, requirement must be met to earn the corresponding point
+  Scene can spawn new objects/particles and run indefinitely by culling or reinitializing objects/particles past their maxAge - 1 point/1 point
+  Objects somehow change over time (ex: color, shape, or transparency) - 1 point/1 point
+
+Object emitter variation - 1 point possible
+Object emitter is parameterized (user input can somehow change properties of how objects/particles are spawned ; 
+                ex: spawn from a fixed area or volume instead of a fixed point, change range of initial velocities, change average maxAge, etc.) - 1 point/1 point
