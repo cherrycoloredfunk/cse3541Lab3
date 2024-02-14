@@ -24,7 +24,7 @@ public class Particle : MonoBehaviour
         particle.transform.parent = transform;
         particle.transform.localScale = new Vector3(.5f, .5f, .5f);
         currentLife = 1;
-        maxLife = 150;
+        maxLife = 300;
         mass = 1;
     }
 
@@ -52,6 +52,7 @@ public class Particle : MonoBehaviour
             Vector3 endVel = velocity + accel * Time.deltaTime;
             position = position + (endVel + velocity) / 2f * Time.deltaTime;
             velocity = endVel;
+
             // Calculate the progress of color change (0 to 1)
             float progress = Mathf.Clamp01((float)currentLife / (float)maxLife);
 
