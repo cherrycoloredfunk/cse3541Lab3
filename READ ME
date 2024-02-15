@@ -9,5 +9,12 @@ Object management - 2 points possible ; split between two categories, requiremen
   Objects somehow change over time (ex: color, shape, or transparency) - 1 point/1 point
 
 Object emitter variation - 1 point possible
-Object emitter is parameterized (user input can somehow change properties of how objects/particles are spawned ; 
+  Object emitter is parameterized (user input can somehow change properties of how objects/particles are spawned ; 
                 ex: spawn from a fixed area or volume instead of a fixed point, change range of initial velocities, change average maxAge, etc.) - 1 point/1 point
+
+Collision response - 2 points possible
+  Objects respond to collisions in a physically correct or interesting way - 2 point/2 points
+
+Documentation and lab submission process - 1 point possible
+
+All portions listed above have been completed.
