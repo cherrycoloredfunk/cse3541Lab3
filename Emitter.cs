@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    IList <Particle> particles = new List <Particle> ();
+    IList<Particle> particles = new List<Particle>();
     Plane p;
 
     // Start is called before the first frame update
@@ -29,16 +29,16 @@ public class NewBehaviourScript : MonoBehaviour
             part.ApplyForce(new Vector3(0, -9.8f, 0));
             part.Update();
             part.ResetForce();
-           
+
 
             //Check if collision with the plane occurs
-            if(Vector3.Dot(part.position, p.normal) <= 0)
+            if (Vector3.Dot(part.position, p.normal) <= 0)
             {
                 Vector3 u = (Vector3.Dot(part.velocity, p.normal) / Vector3.Dot(p.normal, p.normal)) * p.normal;
                 Vector3 w = part.velocity - u;
                 part.velocity = w - u;
             }
-              
+
         }
     }
 }
