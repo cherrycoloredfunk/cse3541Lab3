@@ -8,10 +8,13 @@ public class NewBehaviourScript : MonoBehaviour
     IList<Particle> particles = new List<Particle>();
     Plane p;
 
+    float spawnLocationMax;
+
     // Start is called before the first frame update
     void Start()
     {
         p = new Plane(new Vector3(1, 1, 0), new Vector3(0, 0, 0));
+        spawnLocationMax = 1.0f;
     }
 
     // Update is called once per frame
@@ -21,7 +24,7 @@ public class NewBehaviourScript : MonoBehaviour
         {
             GameObject s = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             Particle p = s.AddComponent<Particle>();
-            p.Create(new Vector3(Random.Range(-5, 5), 8, Random.Range(0, 5)), s);
+            p.Create(new Vector3(Random.Range(spawnLocationMax * -1, spawnLocationMax), 8, Random.Range(spawnLocationMax * -1, spawnLocationMax)), s);
             particles.Add(p);
         }
         foreach (Particle part in particles)
@@ -39,6 +42,15 @@ public class NewBehaviourScript : MonoBehaviour
                 part.velocity = w - u;
             }
 
+        }
+
+        if(Input.GetKey(KeyCode.O))
+        {
+            spawnLocationMax += .01f;
+        }
+        if (Input.GetKey(KeyCode.L))
+        {
+            spawnLocationMax -= .01f;
         }
     }
 }

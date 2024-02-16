@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Particle : MonoBehaviour
 {
-    public Material metallicMaterial; // Reference to the metallic material
     public Vector3 position;
     public Vector3 velocity;
     Vector3 force;
@@ -14,6 +13,8 @@ public class Particle : MonoBehaviour
     float mass;
     int currentLife;
     int maxLife;
+
+    float spawnLocationMax;
 
     public void Create(Vector3 pos, GameObject g)
     {
@@ -27,21 +28,13 @@ public class Particle : MonoBehaviour
         currentLife = 1;
         maxLife = 300;
         mass = 1;
+        spawnLocationMax = 1.0f;
     }
 
     // Start is called before the first frame update
     public void Start()
     {
-        // Check if the metallic material is assigned
-        if (metallicMaterial != null)
-        {
-            // Apply the metallic material to the object's renderer
-            Renderer renderer = GetComponent<Renderer>();
-            if (renderer != null)
-            {
-                renderer.material = metallicMaterial;
-            }
-        }
+
     }
 
     // Update is called once per frame
@@ -52,7 +45,7 @@ public class Particle : MonoBehaviour
             ResetForce();
             accel = new Vector3(0, 0, 0);
             velocity = new Vector3(0, 0, 0);
-            position = new Vector3(Random.Range(-5, 5), 8, Random.Range(0, 5));
+            position = new Vector3(Random.Range(spawnLocationMax * -1, spawnLocationMax), 8, Random.Range(spawnLocationMax * -1, spawnLocationMax));
             currentLife = 0;
 
         }
@@ -67,15 +60,22 @@ public class Particle : MonoBehaviour
             float progress = Mathf.Clamp01((float)currentLife / (float)maxLife);
 
             // Interpolate between startColor and endColor based on progress
-            Color newColor = Color.Lerp(Color.cyan, Color.blue, progress);
-            // Apply the new color to the object's material
-            newColor.a = 0.99f; // Set alpha value for metalness
+            Color newColor = Color.Lerp(Color.white, Color.blue, progress);
 
             // Apply the new color to the object's material
             GetComponent<Renderer>().material.color = newColor;
         }
         particle.transform.position = position;
         currentLife++;
+
+        if (Input.GetKey(KeyCode.O))
+        {
+            spawnLocationMax += .01f;
+        }
+        if (Input.GetKey(KeyCode.L))
+        {
+            spawnLocationMax -= .01f;
+        }
     }
 
     public void ApplyForce(Vector3 f)
