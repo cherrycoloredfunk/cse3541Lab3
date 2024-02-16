@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Particle : MonoBehaviour
 {
+    public Material metallicMaterial; // Reference to the metallic material
     public Vector3 position;
     public Vector3 velocity;
     Vector3 force;
@@ -31,13 +32,22 @@ public class Particle : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-    
+        // Check if the metallic material is assigned
+        if (metallicMaterial != null)
+        {
+            // Apply the metallic material to the object's renderer
+            Renderer renderer = GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                renderer.material = metallicMaterial;
+            }
+        }
     }
 
     // Update is called once per frame
     public void Update()
     {
-        if(currentLife >= maxLife)
+        if (currentLife >= maxLife)
         {
             ResetForce();
             accel = new Vector3(0, 0, 0);
@@ -57,7 +67,9 @@ public class Particle : MonoBehaviour
             float progress = Mathf.Clamp01((float)currentLife / (float)maxLife);
 
             // Interpolate between startColor and endColor based on progress
-            Color newColor = Color.Lerp(Color.white, Color.blue, progress);
+            Color newColor = Color.Lerp(Color.cyan, Color.blue, progress);
+            // Apply the new color to the object's material
+            newColor.a = 0.99f; // Set alpha value for metalness
 
             // Apply the new color to the object's material
             GetComponent<Renderer>().material.color = newColor;
